@@ -26,6 +26,7 @@ function Navbar() {
           <ul className="navbar-nav">
             <li className="nav-item"><Link className="nav-link" to="/books/add">Add Book</Link></li>
             <li className="nav-item"><Link className="nav-link" to="/books/edit">Edit Book</Link></li>
+            <li className="nav-item"><Link className="nav-link" to="/borrow">Borrow Book</Link></li>
           </ul>
         </div>
       </div>

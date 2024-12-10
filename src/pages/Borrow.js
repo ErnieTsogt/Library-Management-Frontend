@@ -2,18 +2,48 @@ import React, { useState } from 'react';
 import axios from '../axios-instance';
 
 const Borrow = () => {
-  const [borrowData, setBorrowData] = useState({ bookId: '', borrowerName: '' });
+  const [bookId, setBookId] = useState('');
+  const [borrowerName, setBorrowerName] = useState('');
+  const [bookDetails, setBookDetails] = useState({ title: '', author: '' });
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [isFetchingDetails, setIsFetchingDetails] = useState(false);
 
+  // Funkcja do pobierania szczegółów książki
+  const fetchBookDetails = async () => {
+    if (!bookId || isNaN(bookId)) {
+      setError('Please enter a valid book ID.');
+      setBookDetails({ title: '', author: '' });
+      return;
+    }
+
+    try {
+      const response = await axios.get(`/books/${bookId}`);
+      setBookDetails(response.data);
+      setError('');
+      setIsFetchingDetails(true);
+    } catch (err) {
+      setError('Failed to fetch book details. Please check the ID.');
+      setBookDetails({ title: '', author: '' });
+      setIsFetchingDetails(false);
+      console.error(err);
+    }
+  };
+
+  // Funkcja obsługująca wypożyczenie książki
   const handleBorrow = async (e) => {
     e.preventDefault();
+
+    const borrowData = { bookId, borrowerName };
 
     try {
       const response = await axios.post('/borrow', borrowData);
       setMessage(response.data.message || 'Book borrowed successfully!');
       setError('');
-      setBorrowData({ bookId: '', borrowerName: '' });
+      setBookId('');
+      setBorrowerName('');
+      setBookDetails({ title: '', author: '' });
+      setIsFetchingDetails(false);
     } catch (err) {
       setError('Error: Could not borrow the book. Please try again.');
       setMessage('');
@@ -45,12 +75,27 @@ const Borrow = () => {
             type="number"
             id="bookId"
             className="form-control"
-            value={borrowData.bookId}
-            onChange={(e) => setBorrowData({ ...borrowData, bookId: e.target.value })}
+            value={bookId}
+            onChange={(e) => setBookId(e.target.value)}
             required
             placeholder="Enter Book ID"
           />
+          <button
+            type="button"
+            className="btn btn-secondary mt-2"
+            onClick={fetchBookDetails}
+          >
+            Fetch Book Details
+          </button>
         </div>
+
+        {isFetchingDetails && (
+          <div className="mb-3">
+            <p><strong>Title:</strong> {bookDetails.title || 'N/A'}</p>
+            <p><strong>Author:</strong> {bookDetails.author || 'N/A'}</p>
+          </div>
+        )}
+
         <div className="mb-3">
           <label htmlFor="borrowerName" className="form-label">
             Borrower Name
@@ -59,13 +104,17 @@ const Borrow = () => {
             type="text"
             id="borrowerName"
             className="form-control"
-            value={borrowData.borrowerName}
-            onChange={(e) => setBorrowData({ ...borrowData, borrowerName: e.target.value })}
+            value={borrowerName}
+            onChange={(e) => setBorrowerName(e.target.value)}
             required
             placeholder="Enter Borrower's Name"
           />
         </div>
-        <button type="submit" className="btn btn-primary w-100">
+        <button
+          type="submit"
+          className="btn btn-primary w-100"
+          disabled={!isFetchingDetails} // Aktywne tylko po pobraniu szczegółów książki
+        >
           Borrow Book
         </button>
       </form>
