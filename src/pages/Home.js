@@ -25,32 +25,32 @@ const Home = () => {
         maxWidth: '800px',
         margin: '0 auto'
       }}>
-        <Link to="/books">
+        <Link to="/books" style={linkStyle}>
           <button style={buttonStyle}>View Books</button>
         </Link>
-        <Link to="/borrow">
+        <Link to="/borrow" style={linkStyle}>
           <button style={buttonStyle}>Borrow Records</button>
         </Link>
-        <Link to="/return">
+        <Link to="/return" style={linkStyle}>
           <button style={buttonStyle}>Return Records</button>
         </Link>
-        <Link to="/books/add">
+        <Link to="/books/add" style={linkStyle}>
           <button style={buttonStyle}>Add a Book</button>
         </Link>
-        <Link to="/borrow-records">
-          <button style={buttonStyle}>Borrow history</button>
+        <Link to="/borrow-records" style={linkStyle}>
+          <button style={buttonStyle}>Borrow History</button>
         </Link>
-        <Link to="/books/edit">
+        <Link to="/books/edit" style={linkStyle}>
           <button style={buttonStyle}>Edit a Book</button>
         </Link>
-        
       </div>
     </div>
   );
 };
 
 const buttonStyle = {
-  padding: '15px 30px',
+  width: '100%', // Przyciski zajmują całą szerokość siatki
+  padding: '15px',
   fontSize: '16px',
   backgroundColor: '#007bff',
   color: '#fff',
@@ -60,11 +60,10 @@ const buttonStyle = {
   transition: 'background-color 0.3s ease',
   textAlign: 'center',
   textDecoration: 'none',
-  display: 'inline-block',
 };
 
-buttonStyle[':hover'] = {
-  backgroundColor: '#0056b3',
+const linkStyle = {
+  textDecoration: 'none', // Usunięcie podkreślenia w linkach
 };
 
 export default Home;

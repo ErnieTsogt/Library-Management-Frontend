@@ -5,6 +5,8 @@ const instance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true, // Dodaj to, aby ciasteczka były automatycznie wysyłane
 });
 
 export default instance;
+

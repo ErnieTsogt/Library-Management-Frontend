@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+.navbar-nav .nav-item .btn.text-danger {
+  color: rgb(255, 0, 0); /* Kolor tekstu na czerwony */
+  background-color: transparent; /* Tło przycisku przezroczyste */
+  border: none; /* Usuwamy ramkę */
+}
+
+.navbar-nav .nav-item .btn.text-danger:hover {
+  background-color: rgb(233, 233, 233); /* Tło na biały przy najechaniu */
+  color: red; /* Tekst nadal czerwony */
+}
+

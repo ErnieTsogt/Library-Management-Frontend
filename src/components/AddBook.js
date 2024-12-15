@@ -24,7 +24,7 @@ const AddBook = () => {
         setErrorMessage('');
         setTitle('');
         setAuthor('');
-        setTimeout(() => navigate('/books'), 2000); // Po dodaniu książki, przekierowanie na stronę książek
+        setTimeout(() => navigate('/books'), 2000); 
       })
       .catch((error) => {
         setErrorMessage('Failed to add book. Please try again.');

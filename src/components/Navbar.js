@@ -1,7 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Navbar() {
+function Navbar({ onLogout }) {
+  const handleLogout = () => {
+    
+    localStorage.removeItem('authToken');
+    onLogout();
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
@@ -27,6 +33,9 @@ function Navbar() {
             <li className="nav-item"><Link className="nav-link" to="/books/add">Add Book</Link></li>
             <li className="nav-item"><Link className="nav-link" to="/books/edit">Edit Book</Link></li>
             <li className="nav-item"><Link className="nav-link" to="/borrow">Borrow Book</Link></li>
+            <li className="nav-item">
+              <button className="btn btn-primary text-danger nav-link" onClick={handleLogout}>Logout</button>
+            </li>
           </ul>
         </div>
       </div>
